@@ -27,7 +27,8 @@ def main():
 
     query = get_embedding("Hello, world! This is a test for Gemini embedding.")
     res = search_vectors(query, namespace="gemini_test")
-    print(res.matches[0].values)
+    # print(res.matches[0].values)
+    print(res)
     # delete_namespace("gemini_test")
     # text = extract_text_from_pdf(
     #     "./Gray-scale image enhancement as an automatic process driven by evolution.pdf"
