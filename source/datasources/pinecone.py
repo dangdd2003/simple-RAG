@@ -30,9 +30,13 @@ def delete_vector(id: str, namespace: str = "default"):
             ids=[id],
             namespace=namespace,
         )
-        logger.warning(msg=f"Deleted vector with id '{id}' from namespace '{namespace}'.")
+        logger.warning(
+            msg=f"Deleted vector with id '{id}' from namespace '{namespace}'."
+        )
     except Exception as e:
-        logger.error(msg=f"Failed to delete vector with id '{id}' from namespace '{namespace}': {e}")
+        logger.error(
+            msg=f"Failed to delete vector with id '{id}' from namespace '{namespace}': {e}"
+        )
 
 
 def delete_namespace(namespace: str = "default"):
@@ -43,11 +47,22 @@ def delete_namespace(namespace: str = "default"):
         logger.error(msg=f"Failed to delete namespace '{namespace}': {e}")
 
 
-def search_vectors(vector: list[float] | None, top_k: int = 3, namespace: str = "default"):
-    return index.query(
-        vector=vector,
-        top_k=top_k,
-        namespace=namespace,
-        include_values=True,
-        include_metadata=False
-    )
+def search_vectors(
+    vector: list[float] | None, top_k: int = 3, namespace: str = "default"
+):
+    try:
+        res = index.query(
+            vector=vector,
+            top_k=top_k,
+            namespace=namespace,
+            # include_values=True,
+            include_metadata=True,
+        )
+        logger.info(
+            msg=f"Queried most {top_k} related vectors from namespace '{namespace}'"
+        )
+        return res
+    except Exception as e:
+        logger.error(
+            msg=f"Failed to query most {top_k} related vectors from namespace '{namespace}': {e}"
+        )
