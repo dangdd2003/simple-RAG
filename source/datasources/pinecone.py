@@ -1,5 +1,4 @@
 import os
-import logging
 from typing import List
 from dotenv import load_dotenv
 from pinecone import Pinecone, Vector
@@ -55,7 +54,7 @@ def search_vectors(
             vector=vector,
             top_k=top_k,
             namespace=namespace,
-            # include_values=True,
+            include_values=True,
             include_metadata=True,
         )
         logger.info(
@@ -66,3 +65,4 @@ def search_vectors(
         logger.error(
             msg=f"Failed to query most {top_k} related vectors from namespace '{namespace}': {e}"
         )
+        return None

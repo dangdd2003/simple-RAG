@@ -1,14 +1,7 @@
-from pinecone import Vector
-from source.datasources.pinecone import search_vectors, delete_namespace, upload_vectors
-from source.datasources.utils import extract_text_from_pdf
-from source.embeddings.gemini_embedding import (
-    get_embedding,
-    get_embeddings,
-    semantic_chunking,
-)
+from source.datasources.pinecone import search_vectors, delete_namespace
+from source.embeddings.gemini_embedding import get_embedding
 from source.helper_function import set_logger
-from langchain_experimental.text_splitter import SemanticChunker
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from source.models.google_llm import query_rag
 
 logger = set_logger("main")
 
@@ -32,11 +25,19 @@ def main():
     #         )
     #     )
     # upload_vectors(vectors=vectors, namespace="temp")
-    vector = get_embedding(
-        "The central theme is the eternal dilemma between good and \nevil, which is so relevant and at the same time makes this a \ntimeless book."
-    )
-    res = search_vectors(vector=vector, top_k=3, namespace="temp")
-    print(res)
+    # prompt = "Who are Dr. Jekyll and Mr. Hyde"
+    # vector = get_embedding(
+    #     prompt
+    # )
+    # res = search_vectors(vector=vector, top_k=30, namespace="temp")
+    # score_text_pairs = [(match.score, match.metadata["text"]) for match in res.matches]
+    # score_text_pairs.sort(key=lambda x: x[0], reverse=True)
+    # top_10_chunks = score_text_pairs[:10]
+    # top_10_texts = [text for _, text in top_10_chunks]
+    # context = "\n\n".join(top_10_texts)
+    # output = query_rag(prompt, context)
+    # print(output)
+    pass
 
 
 if __name__ == "__main__":
