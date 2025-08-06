@@ -38,12 +38,14 @@ def query_contexts(prompt: str) -> str | None:
 """,
             config=types.GenerateContentConfig(
                 system_instruction="You are RAG tool helper. Extract key contexts from the user questions to use for RAG."
-            )
+            ),
         )
         logger.info(msg=f"Query contexts for RAG using '{model_name}'")
         return rag_contexts.text
     except Exception as e:
-        logger.warning(msg=f"Failed to query contexts for RAG using '{model_name}': {e}")
+        logger.warning(
+            msg=f"Failed to query contexts for RAG using '{model_name}': {e}"
+        )
         return None
 
 
@@ -62,10 +64,12 @@ def query_rag(prompt: str, context: str) -> str | None:
                 system_instruction="""
                 You are helpful assistant with RAG tool. Answer the user questions based on the provided contexts.
                 """
-            )
+            ),
         )
         logger.info(msg=f"Query LLM (RAG enabled) using '{model_name}'")
         return response.text
     except Exception as e:
-        logger.warning(msg=f"Failed to query LLM (RAG enabled) using '{model_name}': {e}")
+        logger.warning(
+            msg=f"Failed to query LLM (RAG enabled) using '{model_name}': {e}"
+        )
         return None
